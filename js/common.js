@@ -33,10 +33,10 @@
 
   function descriptionSentences(value) {
     return String(value || '')
-      .split(/\.\s+(?=[A-Z0-9])|\.$/)
+      .split(/\r?\n|\.\s+(?=[A-Z0-9])|\.$/)
       .map((sentence) => sentence.trim())
       .filter(Boolean)
-      .map((sentence) => `${sentence}.`);
+      .map((sentence) => /[.!?]$/.test(sentence) ? sentence : `${sentence}.`);
   }
 
   async function loadResume() {

@@ -39,12 +39,16 @@ document.addEventListener('DOMContentLoaded', async () => {
       titleRow.append(app.element('span', '', `${experience.startDate || ''} – ${experience.endDate || ''}`));
       item.append(titleRow, app.element('p', 'cv-company', `${experience.company}${experience.location ? ` | ${experience.location}` : ''}`));
       const list = app.element('ul');
-      if (experience.description) list.append(app.element('li', '', experience.description));
-      (experience.projects || []).forEach((project) => {
-        const descriptions = app.descriptionSentences(project.description);
-        const prefix = project.projectLocation ? `${project.projectLocation}: ` : '';
-        list.append(app.element('li', '', `${prefix}${descriptions.join(' ')}`));
-      });
+      const highlights = app.descriptionSentences(experience.description).slice(0, 6);
+      if (highlights.length) {
+        highlights.forEach((highlight) => list.append(app.element('li', '', highlight)));
+      } else {
+        (experience.projects || []).slice(0, 6).forEach((project) => {
+          const descriptions = app.descriptionSentences(project.description);
+          const prefix = project.projectLocation ? `${project.projectLocation}: ` : '';
+          list.append(app.element('li', '', `${prefix}${descriptions.join(' ')}`));
+        });
+      }
       item.append(list); experienceSection.append(item);
     });
     root.append(experienceSection);

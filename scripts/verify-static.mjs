@@ -20,6 +20,12 @@ pages.forEach((page) => {
 const data = JSON.parse(fs.readFileSync(path.join(root, 'data/resume.json'), 'utf8'));
 const projectCount = data.experiences.reduce((total, experience) => total + experience.projects.length, 0);
 if (data.experiences.length !== 3 || projectCount !== 34) problems.push('Fallback data counts do not match Laravel');
+data.experiences.forEach((experience) => {
+  const bulletCount = String(experience.description || '').split(/\r?\n/).map((item) => item.trim()).filter(Boolean).length;
+  if (bulletCount < 5 || bulletCount > 6) {
+    problems.push(`Experience ${experience.id} must contain 5–6 CV description bullets; received ${bulletCount}`);
+  }
+});
 
 if (problems.length) {
   console.error(problems.join('\n'));
