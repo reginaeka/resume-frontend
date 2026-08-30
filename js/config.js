@@ -1,6 +1,6 @@
 (function configureResume() {
   const productionApiBaseUrl =
-    "https://resume-backend-henna.vercel.app//api/v1";
+    "https://resume-backend-henna.vercel.app/api/v1";
   const isLocal = ["localhost", "127.0.0.1"].includes(window.location.hostname);
   const configured =
     window.RESUME_API_BASE_URL ||
